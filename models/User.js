@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const UserSchema = mongoose.Schema({
   name: {
     type: String,
@@ -10,13 +9,12 @@ const UserSchema = mongoose.Schema({
     unique: true,
     required: true
   },
-  Password: {
+  password: {
     type: String,
     required: true
   },
-  Avatar: {
-    type: String,
-    required: true
+  avatar: {
+    type: String
   },
   date: {
     type: Date,

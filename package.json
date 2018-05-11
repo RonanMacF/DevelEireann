@@ -1,8 +1,7 @@
 {
   "name": "develeire",
   "version": "1.0.0",
-  "description":
-    "Social media application for Irish developers using MERN stack",
+  "description": "Social media application for Irish developers using MERN stack",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -22,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.0",
     "passport": "^0.4.0",
