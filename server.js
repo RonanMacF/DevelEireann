@@ -1,7 +1,7 @@
 // Imports
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+//const bodyParser = require("body-parser");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
@@ -12,18 +12,16 @@ const db = require("./config/keys").mongoURI;
 
 //Body parser middleware
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: false
   })
 );
-app.use(bodyParser.json());
+app.use(express.json());
 
 mongoose
   .connect(db)
   .then(() => console.log("connected"))
   .catch(err => console.log(err));
-
-app.get("/", (req, res) => res.send("Hello World"));
 
 // Use Routes
 app.use("/api/users", users);
