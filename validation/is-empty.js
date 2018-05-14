@@ -1,3 +1,5 @@
+// This function check if any provided value isEmpty, be it a primitive type or object
+
 const isEmpty = value =>
   value === undefined ||
   value === null ||
