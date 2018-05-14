@@ -97,9 +97,8 @@ router.post(
     Post.findById(req.params.id)
       .then(post => {
         if (
-          post.likes.includes(req.user.id)
-          // post.likes.filter(like => like.user.toString() === req.user.id)
-          //   .length > 0 - This is another possibly way if the other way does not work
+          post.likes.filter(like => like.user.toString() === req.user.id)
+            .length > 0
         ) {
           return res
             .status(400)
@@ -126,20 +125,84 @@ router.post(
     Post.findById(req.params.id)
       .then(post => {
         //If user already liked post remove it from the likes array
-        if (post.likes.includes(req.user.id)) {
-          post.likes = post.likes.filter(
-            like => like.user.toString != req.user.id
-          );
-          post.save().then(post => res.json(post));
+        if (
+          post.likes.filter(like => like.user.toString() === req.user.id)
+            .length === 0
+        ) {
+          return res
+            .status(400)
+            .json({ notliked: "You have not yet liked this post" });
         }
 
-        // Save
-        return res
-          .status(400)
-          .json({ notliked: "You have not yet liked this post" });
+        post.likes = post.likes.filter(
+          like => like.user.toString() != req.user.id
+        );
+        post.save().then(post => res.json(post));
       })
       .catch(err => res.status(404).json({ postnotfound: "No post found" }));
   }
 );
 
+// @route   POST api/posts/comment/:id
+// @desc    Add comment to post
+// @access  Private
+router.post(
+  "/comment/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+
+    Post.findById(req.params.id)
+      .then(post => {
+        const newComment = {
+          text: req.body.text,
+          name: req.body.name,
+          avatar: req.body.avatar,
+          user: req.user.id
+        };
+
+        // Add to comments array
+        post.comments.unshift(newComment);
+
+        // Save
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+  }
+);
+
+// @route   DELETE api/posts/comment/:id/:comment_id
+// @desc    Remove comment from post
+// @access  Private
+router.delete(
+  "/comment/:id/:comment_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.id)
+      .then(post => {
+        // Check to see if comment exists
+        if (
+          post.comments.filter(
+            comment => comment._id.toString() === req.params.comment_id
+          ).length === 0
+        ) {
+          return res
+            .status(404)
+            .json({ commentnotexists: "Comment does not exist" });
+        }
+
+        post.comments = post.comments.filter(
+          comment => comment._id.toString() != req.params.comment_id
+        );
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+  }
+);
 module.exports = router;
