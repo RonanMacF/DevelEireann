@@ -87,4 +87,59 @@ router.delete(
   }
 );
 
+// @route   POST api/posts/like/:id
+// @desc    Like post
+// @access  Private
+router.post(
+  "/like/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.id)
+      .then(post => {
+        if (
+          post.likes.includes(req.user.id)
+          // post.likes.filter(like => like.user.toString() === req.user.id)
+          //   .length > 0 - This is another possibly way if the other way does not work
+        ) {
+          return res
+            .status(400)
+            .json({ alreadyliked: "User already liked this post" });
+        }
+
+        // Add user id to likes array
+        post.likes.unshift({ user: req.user.id });
+
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+  }
+);
+
+// @route   POST api/posts/unlike/:id
+// @desc    Unlike post
+// @access  Private
+router.post(
+  "/unlike/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Find the post
+    Post.findById(req.params.id)
+      .then(post => {
+        //If user already liked post remove it from the likes array
+        if (post.likes.includes(req.user.id)) {
+          post.likes = post.likes.filter(
+            like => like.user.toString != req.user.id
+          );
+          post.save().then(post => res.json(post));
+        }
+
+        // Save
+        return res
+          .status(400)
+          .json({ notliked: "You have not yet liked this post" });
+      })
+      .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+  }
+);
+
 module.exports = router;
