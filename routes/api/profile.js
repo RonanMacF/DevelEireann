@@ -266,13 +266,9 @@ router.delete(
   (req, res) => {
     Profile.findOne({ user: req.user.id })
       .then(profile => {
-        // Get remove index
-        const removeIndex = profile.education
-          .map(item => item.id)
-          .indexOf(req.params.edu_id);
-
-        // Splice out of array
-        profile.education.splice(removeIndex, 1);
+        profile.education = profile.education.filter(
+          education => education.id != req.params.edu_id
+        );
 
         // Save
         profile.save().then(profile => res.json(profile));
