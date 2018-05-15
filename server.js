@@ -10,6 +10,7 @@ const app = express();
 // Body parser middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(express.static("http://localhost:3000" + "/"));
 
 // DB Config
 const db = require("./config/keys").mongoURI;
