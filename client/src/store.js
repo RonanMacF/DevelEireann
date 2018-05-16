@@ -5,6 +5,7 @@ import rootReducer from "./reducers/index";
 const middleware = [thunk];
 const initialState = {};
 
+// This const is necessary to remove some chrom redux dev tools that appeared
 const composeEnhancer =
   process.env.NODE_ENV !== "production" &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -14,7 +15,10 @@ const composeEnhancer =
       })
     : compose;
 
+// Create enhance with middleware + redux chrome tools
 const enhancer = composeEnhancer(applyMiddleware(...middleware));
+
+//Create the store
 const store = createStore(rootReducer, initialState, enhancer);
 
 export default store;

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
 
 class Register extends Component {
   // Initialise State
@@ -11,6 +14,13 @@ class Register extends Component {
     password2: "",
     errors: {}
   };
+
+  // If logged in then redirect to dashbaord
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
 
   //   Updates input boxes as users type
   onChange = e => {
@@ -27,28 +37,22 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    axios
-      .post("/api/users/register", newUser)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({ errors: err.response.data }));
+    this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props.errors;
 
     return (
-      <section className="register">
+      <div className="register">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Sign Up</h1>
               <p className="lead text-center">
-                Create your DevelEireann account
+                Create your DevConnector account
               </p>
-
-              {/* className={errors.name ? 'form-control form-control-lg is-invalid' : 'form-control form-control-lg'} */}
               <form noValidate onSubmit={this.onSubmit}>
-                {/* Name Field */}
                 <div className="form-group">
                   <input
                     type="text"
@@ -64,8 +68,6 @@ class Register extends Component {
                     <div className="invalid-feedback">{errors.name}</div>
                   )}
                 </div>
-
-                {/* Email Field */}
                 <div className="form-group">
                   <input
                     type="email"
@@ -85,8 +87,6 @@ class Register extends Component {
                     a Gravatar email
                   </small>
                 </div>
-
-                {/* Password field */}
                 <div className="form-group">
                   <input
                     type="password"
@@ -102,8 +102,6 @@ class Register extends Component {
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
-
-                {/* Password 2 Field */}
                 <div className="form-group">
                   <input
                     type="password"
@@ -124,9 +122,20 @@ class Register extends Component {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     );
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));
