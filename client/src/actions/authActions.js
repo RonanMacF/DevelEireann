@@ -8,7 +8,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
-    .then(res => history.push("/login")) // We need to send history to redirect to a non BroswerRouter component
+    .then(res => history.push("/dashboard")) // We need to send history to redirect to a non BroswerRouter component
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

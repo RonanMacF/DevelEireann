@@ -22,6 +22,12 @@ class Register extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   //   Updates input boxes as users type
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -41,7 +47,7 @@ class Register extends Component {
   };
 
   render() {
-    const { errors } = this.props.errors;
+    const errors = this.props.errors;
 
     return (
       <div className="register">
