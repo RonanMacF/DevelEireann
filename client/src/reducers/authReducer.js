@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload), // Boolean value
-        user: action.payload // Contains userID, avatar, name etc
+        user: action.payload // Contains userID, name & avatar
       };
 
     default:
