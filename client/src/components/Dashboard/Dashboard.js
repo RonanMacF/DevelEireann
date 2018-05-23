@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "..//../actions/profileActions";
+import Spinner from "../common/spinner";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -9,15 +10,28 @@ class Dashboard extends Component {
   }
 
   render() {
-    //const { user } = this.props.auth;
+    const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
     let dashboardContent;
 
     if (profile === null || loading) {
-      dashboardContent = <h4>Loading</h4>;
+      dashboardContent = <Spinner />;
     } else {
-      dashboardContent = <h4>Ready</h4>;
+      // Check if logged in user has made a profile
+      if (Object.keys(profile).length > 0) {
+        dashboardContent = <h4>TODO: Display Profile</h4>;
+      } else {
+        dashboardContent = (
+          <div>
+            <p className="lead text-muted">Welcome {user.name}</p>
+            <p>You have not yet setup a profile, please add some info</p>
+            <Link to="/create-profile" className="btn btn-lg btn-info">
+              Create Profile
+            </Link>
+          </div>
+        );
+      }
     }
 
     return (
