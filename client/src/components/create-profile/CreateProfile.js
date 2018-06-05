@@ -9,29 +9,23 @@ import SelectListGroup from "../common/SelectListGroup";
 import { createProfile } from "../../actions/profileActions";
 
 class CreateProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displaySocialInputs: false,
-      handle: "",
-      company: "",
-      website: "",
-      location: "",
-      status: "",
-      skills: "",
-      githubusername: "",
-      bio: "",
-      twitter: "",
-      facebook: "",
-      linkedin: "",
-      youtube: "",
-      instagram: "",
-      errors: {}
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  state = {
+    displaySocialInputs: false,
+    handle: "",
+    company: "",
+    website: "",
+    location: "",
+    status: "",
+    skills: "",
+    githubusername: "",
+    bio: "",
+    twitter: "",
+    facebook: "",
+    linkedin: "",
+    youtube: "",
+    instagram: "",
+    errors: {}
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -42,6 +36,7 @@ class CreateProfile extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    // TODO test if sending in simply state is ok
     const profileData = {
       handle: this.state.handle,
       company: this.state.company,
@@ -61,6 +56,7 @@ class CreateProfile extends Component {
     this.props.createProfile(profileData, this.props.history);
   }
 
+  // TODO: Check JSON array Indexing
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -70,6 +66,7 @@ class CreateProfile extends Component {
 
     let socialInputs;
 
+    // Create all of the social fields if toggled
     if (displaySocialInputs) {
       socialInputs = (
         <div>
@@ -121,8 +118,8 @@ class CreateProfile extends Component {
       );
     }
 
-    // Select options for status
-    const options = [
+    // Select careerOptions for status
+    const careerOptions = [
       { label: "* Select Professional Status", value: 0 },
       { label: "Developer", value: "Developer" },
       { label: "Junior Developer", value: "Junior Developer" },
@@ -144,70 +141,83 @@ class CreateProfile extends Component {
                 Let's get some information to make your profile stand out
               </p>
               <small className="d-block pb-3">* = required fields</small>
-              <form onSubmit={this.onSubmit}>
+
+              {/* Begin Form */}
+              <form onSubmit={() => this.onSubmit}>
+                
+                {/* Handle */}
                 <TextFieldGroup
                   placeholder="* Profile Handle"
                   name="handle"
                   value={this.state.handle}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.handle}
                   info="A unique handle for your profile URL. Your full name, company name, nickname"
-                />
+                />  
+
+                {/* career status */}
                 <SelectListGroup
                   placeholder="Status"
                   name="status"
                   value={this.state.status}
-                  onChange={this.onChange}
-                  options={options}
+                  onChange={() => this.onChange}
+                  options={careerOptions}
                   error={errors.status}
                   info="Give us an idea of where you are at in your career"
                 />
+
+                {/* Company */}
                 <TextFieldGroup
                   placeholder="Company"
                   name="company"
                   value={this.state.company}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.company}
                   info="Could be your own company or one you work for"
                 />
+
                 <TextFieldGroup
                   placeholder="Website"
                   name="website"
                   value={this.state.website}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.website}
                   info="Could be your own website or a company one"
                 />
+
                 <TextFieldGroup
                   placeholder="Location"
                   name="location"
                   value={this.state.location}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.location}
                   info="City or city & state suggested (eg. Boston, MA)"
                 />
+
                 <TextFieldGroup
                   placeholder="* Skills"
                   name="skills"
                   value={this.state.skills}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.skills}
                   info="Please use comma separated values (eg.
                     HTML,CSS,JavaScript,PHP"
                 />
+
                 <TextFieldGroup
                   placeholder="Github Username"
                   name="githubusername"
                   value={this.state.githubusername}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.githubusername}
                   info="If you want your latest repos and a Github link, include your username"
                 />
+
                 <TextAreaFieldGroup
                   placeholder="Short Bio"
                   name="bio"
                   value={this.state.bio}
-                  onChange={this.onChange}
+                  onChange={() => this.onChange}
                   error={errors.bio}
                   info="Tell us a little about yourself"
                 />
