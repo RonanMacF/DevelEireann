@@ -144,7 +144,6 @@ class CreateProfile extends Component {
 
               {/* Begin Form */}
               <form onSubmit={() => this.onSubmit}>
-                
                 {/* Handle */}
                 <TextFieldGroup
                   placeholder="* Profile Handle"
@@ -153,7 +152,7 @@ class CreateProfile extends Component {
                   onChange={() => this.onChange}
                   error={errors.handle}
                   info="A unique handle for your profile URL. Your full name, company name, nickname"
-                />  
+                />
 
                 {/* career status */}
                 <SelectListGroup
@@ -176,6 +175,7 @@ class CreateProfile extends Component {
                   info="Could be your own company or one you work for"
                 />
 
+                {/* Website */}
                 <TextFieldGroup
                   placeholder="Website"
                   name="website"
@@ -185,6 +185,7 @@ class CreateProfile extends Component {
                   info="Could be your own website or a company one"
                 />
 
+                {/* Location */}
                 <TextFieldGroup
                   placeholder="Location"
                   name="location"
@@ -194,6 +195,7 @@ class CreateProfile extends Component {
                   info="City or city & state suggested (eg. Boston, MA)"
                 />
 
+                {/* Skills */}
                 <TextFieldGroup
                   placeholder="* Skills"
                   name="skills"
@@ -204,6 +206,7 @@ class CreateProfile extends Component {
                     HTML,CSS,JavaScript,PHP"
                 />
 
+                {/* Github UserName */}
                 <TextFieldGroup
                   placeholder="Github Username"
                   name="githubusername"
@@ -213,6 +216,7 @@ class CreateProfile extends Component {
                   info="If you want your latest repos and a Github link, include your username"
                 />
 
+                {/* Bio */}
                 <TextAreaFieldGroup
                   placeholder="Short Bio"
                   name="bio"
