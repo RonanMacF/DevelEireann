@@ -136,6 +136,7 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
+              {/* Begin Text */}
               <h1 className="display-4 text-center">Create Your Profile</h1>
               <p className="lead text-center">
                 Let's get some information to make your profile stand out
@@ -226,10 +227,12 @@ class CreateProfile extends Component {
                   info="Tell us a little about yourself"
                 />
 
+                {/* Display Social Info Button */}
                 <div className="mb-3">
                   <button
                     type="button"
                     onClick={() => {
+                      // Invert displaySocialInputs
                       this.setState(prevState => ({
                         displaySocialInputs: !prevState.displaySocialInputs
                       }));
@@ -241,6 +244,8 @@ class CreateProfile extends Component {
                   <span className="text-muted">Optional</span>
                 </div>
                 {socialInputs}
+
+                {/* Form Submit Button */}
                 <input
                   type="submit"
                   value="Submit"
