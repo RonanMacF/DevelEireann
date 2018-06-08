@@ -13,11 +13,15 @@ const InputGroup = ({
 }) => {
   return (
     <div className="input-group mb-3">
+
+      {/* Prepend Social Icon  */}
       <div className="input-group-prepend">
         <span className="input-group-text">
           <i className={icon} />
         </span>
       </div>
+
+
       <input
         className={classnames('form-control form-control-lg', {
           'is-invalid': error
@@ -27,6 +31,8 @@ const InputGroup = ({
         value={value}
         onChange={onChange}
       />
+
+      {/* If there is an error and invalid-feedback class then display the error */}
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );

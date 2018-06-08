@@ -149,7 +149,6 @@ router.post(
           if (profileWithHandle && profileWithHandle.user != req.user.id) {
             errors.handle = "That handle already exists";
             res.status(400).json(errors);
-            console.log("ran this");
           }
 
           if (profile && !errors.handle) {
