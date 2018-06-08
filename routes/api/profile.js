@@ -158,6 +158,7 @@ router.post(
               { new: true }
             ).then(profile => res.json(profile));
           } else if (!errors.handle) {
+            S;
             new Profile(profileFields)
               .save()
               .then(profile => res.json(profile));
