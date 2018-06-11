@@ -56,7 +56,6 @@ class CreateProfile extends Component {
     this.props.createProfile(profileData, this.props.history);
   }
 
-  // TODO: Check JSON array Indexing
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -270,6 +269,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { createProfile })(
-  withRouter(CreateProfile)
-);
+export default connect(
+  mapStateToProps,
+  { createProfile }
+)(withRouter(CreateProfile));
