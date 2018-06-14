@@ -21,7 +21,11 @@ class Dashboard extends Component {
     } else {
       // Check if logged in user has made a profile
       if (Object.keys(profile).length > 0) {
-        dashboardContent = <h4>TODO: Display Profile</h4>;
+        dashboardContent = (
+          <div>
+            <p className="lead text-muted">Welcome {user.name}</p>
+          </div>
+        );
       } else {
         dashboardContent = (
           <div>
