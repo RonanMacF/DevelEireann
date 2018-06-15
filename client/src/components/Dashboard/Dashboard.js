@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "..//../actions/profileActions";
 import Spinner from "../common/Spinner";
+import profileActions from "../actions/profileActions";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -23,7 +24,10 @@ class Dashboard extends Component {
       if (Object.keys(profile).length > 0) {
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Welcome {user.name}</p>
+            <p className="lead text-muted">
+              Welcome <Link to={`/profil/${profile.handle}`}>{user.name}</Link>
+            </p>
+            <profileActions />
           </div>
         );
       } else {
