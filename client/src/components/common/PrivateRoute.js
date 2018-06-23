@@ -1,10 +1,9 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
-  // If authenticated link to the given link, else go to login
   <Route
     {...rest}
     render={props =>

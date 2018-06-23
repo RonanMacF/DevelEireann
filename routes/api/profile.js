@@ -115,56 +115,49 @@ router.post(
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
-
-    const fields = [
-      "handle",
-      "company",
-      "website",
-      "location",
-      "bio",
-      "status",
-      "githubprofile"
-    ];
-
-    socialFields = ["youtube", "twitter", "facebook", "linkedin", "instagram"];
-
-    // Assign non empty normal fields to their values
-    fields.forEach(field => {
-      if (req.body[field]) profileFields[field] = req.body[field];
-    });
-
-    // Assign non empty social fields to their values
-    socialFields.forEach(field => {
-      if (req.body[field]) profileFields[field] = req.body[field];
-    });
-
+    if (req.body.handle) profileFields.handle = req.body.handle;
+    if (req.body.company) profileFields.company = req.body.company;
+    if (req.body.website) profileFields.website = req.body.website;
+    if (req.body.location) profileFields.location = req.body.location;
+    if (req.body.bio) profileFields.bio = req.body.bio;
+    if (req.body.status) profileFields.status = req.body.status;
+    if (req.body.githubusername)
+      profileFields.githubusername = req.body.githubusername;
     // Skills - Spilt into array
     if (typeof req.body.skills !== "undefined") {
       profileFields.skills = req.body.skills.split(",");
     }
 
+    // Social
+    profileFields.social = {};
+    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
+    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
+    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
+    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
+    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+
     Profile.findOne({ user: req.user.id }).then(profile => {
-      Profile.findOne({ handle: profileFields.handle }).then(
-        profileWithHandle => {
-          if (profileWithHandle && profileWithHandle.user != req.user.id) {
+      if (profile) {
+        // Update
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profileFields },
+          { new: true }
+        ).then(profile => res.json(profile));
+      } else {
+        // Create
+
+        // Check if handle exists
+        Profile.findOne({ handle: profileFields.handle }).then(profile => {
+          if (profile) {
             errors.handle = "That handle already exists";
             res.status(400).json(errors);
           }
 
-          if (profile && !errors.handle) {
-            Profile.findOneAndUpdate(
-              { user: req.user.id }, // primary key
-              { $set: profileFields }, // details to be updatated
-              { new: true }
-            ).then(profile => res.json(profile));
-          } else if (!errors.handle) {
-            S;
-            new Profile(profileFields)
-              .save()
-              .then(profile => res.json(profile));
-          }
-        }
-      );
+          // Save Profile
+          new Profile(profileFields).save().then(profile => res.json(profile));
+        });
+      }
     });
   }
 );

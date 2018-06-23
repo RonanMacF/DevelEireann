@@ -18,7 +18,7 @@ const TextFieldGroup = ({
       <input
         type={type}
         className={classnames('form-control form-control-lg', {
-          'is-invalid': error // If there is an error display the is-invalid class
+          'is-invalid': error
         })}
         placeholder={placeholder}
         name={name}
@@ -43,7 +43,6 @@ TextFieldGroup.propTypes = {
   disabled: PropTypes.string
 };
 
-// defaults values to an empty string ""
 TextFieldGroup.defaultProps = {
   type: 'text'
 };
