@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RonanMacF/Develeire.git"
+    "url": "git+https://github.com/RonanMacF/DevelEireann.git"
   },
   "author": "Ronan Mac FHlannchadha",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RonanMacF/Develeire/issues"
+    "url": "https://github.com/RonanMacF/DevelEireann/issues"
   },
-  "homepage": "https://github.com/RonanMacF/Develeire#readme",
+  "homepage": "https://github.com/RonanMacF/DevelEireann#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "concurrently": "^3.5.1",
