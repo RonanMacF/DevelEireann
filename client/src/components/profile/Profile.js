@@ -6,7 +6,7 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileAbout from "./ProfileAbout";
 import ProfileCreds from "./ProfileCreds";
 import ProfileGithub from "./ProfileGithub";
-import Spinner from "../common/Spinner";
+import Spinner from "../common/spinner";
 import { getProfileByHandle } from "../../actions/profileActions";
 
 class Profile extends Component {
