@@ -30,10 +30,10 @@ router.get("/", (req, res) => {
 });
 
 // @route   GET api/posts/:id
-// @desc    Get posts by id
+// @desc    Get post by id
 // @access  Public
 router.get("/:id", (req, res) => {
-  Post.findbyID(req.params.id)
+  Post.findById(req.params.id)
     .then(post => res.json(post))
     .catch(err =>
       res.status(404).json({ nopostfound: "No post found with that ID" })
@@ -56,10 +56,10 @@ router.post(
     }
 
     const newPost = new Post({
+      user: req.user.id,
       text: req.body.text,
-      name: req.body.name,
-      avatar: req.body.avatar,
-      user: req.user.id
+      name: req.user.name,
+      avatar: req.user.avatar
     });
 
     newPost.save().then(post => res.json(post));

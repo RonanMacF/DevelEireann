@@ -3,8 +3,9 @@ import {
   GET_POSTS,
   GET_POST,
   DELETE_POST,
-  POST_LOADING
-} from '../actions/types';
+  POST_LOADING,
+  LIKE_POST
+} from "../actions/types";
 
 const initialState = {
   posts: [],
@@ -40,6 +41,20 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: state.posts.filter(post => post._id !== action.payload)
+      };
+    case LIKE_POST:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post._id === action.payload._id) {
+            return {
+              ...post,
+              ...action.payload
+            };
+          } else {
+            return post;
+          }
+        })
       };
     default:
       return state;
