@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { clearCurrentProfile } from "../../actions/profileActions";
+import { clearCurrentProfile } from "../../actions/ProfileActions";
 
 class Navbar extends Component {
   onLogoutClick(e) {
