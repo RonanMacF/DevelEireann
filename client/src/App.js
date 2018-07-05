@@ -62,6 +62,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
               <Route exact path="/profile/:handle" component={Profile} />
+              // All private routes need to be encased in a Switch else issues occur
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
